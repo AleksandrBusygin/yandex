@@ -49,11 +49,12 @@ public class YandexTest {
         Init.getDriver().close();
     }
 
+
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                { "Компьютерная техника", "Ноутбуки", "0", "30000", "HP","Lenovo"},
-                { "Компьютерная техника", "Планшеты", "20000","25000","Apple","HP"},
+                { "Компьютерная техника", "Ноутбуки", "0", "30000", "HP","Lenovo", 48, 1},
+                { "Компьютерная техника", "Планшеты", "20000","25000","Apple","HP", 6, 2},
                 });
     }
 
@@ -69,9 +70,23 @@ public class YandexTest {
     public String firstManufacturer;
     @Parameterized.Parameter(5)
     public String secondManufacturer;
+    @Parameterized.Parameter(6)
+    public int countOfElements;
+    @Parameterized.Parameter(7)
+    public int number;
+
+    public void checkStep(int num){
+        ParamMarketPage paramMarketPage = new ParamMarketPage();
+        if (num == 1){
+            paramMarketPage.checkProduct(firstManufacturer,secondManufacturer);
+        }
+        if (num == 2){
+            paramMarketPage.checkPrice(from,to);
+        }
+    }
 
     @Test
-    public void firstTest() throws InterruptedException {
+    public void test() throws InterruptedException {
         MainPage mainPage = new MainPage();
         MarketPage marketPage = new MarketPage();
         SecondMarketPage secondMarketPage = new SecondMarketPage();
@@ -82,8 +97,8 @@ public class YandexTest {
         secondMarketPage.chooseItem(item);
         paramMarketPage.setPrice(from,to);
         paramMarketPage.chooseManufacturer(firstManufacturer, secondManufacturer);
-        paramMarketPage.checkCountOfProducts();
-        paramMarketPage.checkProduct(firstManufacturer, secondManufacturer);
+        paramMarketPage.checkCountOfProducts(countOfElements);
+        checkStep(number);
 
     }
 }

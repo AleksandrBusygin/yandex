@@ -1,10 +1,16 @@
 package pages;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import util.Init;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 public class ParamMarketPage extends BasePageObject {
 
@@ -20,6 +26,10 @@ public class ParamMarketPage extends BasePageObject {
     @FindBy(xpath = "//div[@data-id]")
     List<WebElement> resultModels;
 
+    @FindBy(xpath = "//div[@data-id]//a[@title]")
+    List<WebElement> nameModels;
+
+
     @FindBy(xpath = "//div[@class='price']")
     List<WebElement> price;
 
@@ -34,14 +44,32 @@ public class ParamMarketPage extends BasePageObject {
         chooseElement(manufacturers,secondName);
     }
 
-    public void checkCountOfProducts() throws InterruptedException {
-        Thread.sleep(5000);
-        Assert.assertTrue("Количество элементов не равно 12", resultModels.size() == 12);
+    public void waitPageLoaded(){
+        WebDriverWait wait = new WebDriverWait(Init.getDriver(), 30);
+        wait.ignoring(NoSuchElementException.class).until((ExpectedCondition<Boolean>) driver ->
+                !isPresent( By.xpath("//*[@class='helpers-params loading']")));
+    }
+
+    public boolean isPresent(By locator){
+        try {
+            Init.getDriver().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            return Init.getDriver().findElement(locator).isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }finally {
+            Init.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        }
+    }
+
+    public void checkCountOfProducts(int count) throws InterruptedException {
+        waitPageLoaded();
+        Assert.assertTrue("Количество элементов не равно 12", resultModels.size() == count);
     }
 
     public boolean productExist(String manufacturerName, String secondManufacturerName){
         for (WebElement item: resultModels){
-            if (isElementPresent(item) && ((item.getText().equalsIgnoreCase(manufacturerName)) || (item.getText().equalsIgnoreCase(secondManufacturerName))))
+            scrollToElement(item);
+            if (isElementPresent(item) && ((item.getText().contains(manufacturerName)) || (item.getText().contains(secondManufacturerName))))
             {
                 return true;
             }
@@ -50,7 +78,8 @@ public class ParamMarketPage extends BasePageObject {
     }
     public boolean priceExist(String from, String to){
         for (WebElement item: price){
-            if (isElementPresent(item) && ((Integer.valueOf(item.getText()) >= Integer.valueOf(from)) && (Integer.valueOf(item.getText()) <= Integer.valueOf(to))))
+            scrollToElement(item);
+            if (isElementPresent(item) && ((Integer.valueOf(item.getText().replaceAll("\\D","")) >= Integer.valueOf(from)) && (Integer.valueOf(item.getText().replaceAll("\\D","")) <= Integer.valueOf(to))))
             {
                 return true;
             }
@@ -59,7 +88,7 @@ public class ParamMarketPage extends BasePageObject {
     }
 
     public void checkProduct(String firstName, String secondName){
-        Assert.assertTrue("Производители [$s] и [$d] указаны не для всех выбранных товаров",productExist(firstName,secondName));
+        Assert.assertTrue("Выбранные производители указаны не для всех товаров",productExist(firstName,secondName));
     }
 
     public void checkPrice(String from, String to){
