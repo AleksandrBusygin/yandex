@@ -54,7 +54,7 @@ public class YandexTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 { "Компьютерная техника", "Ноутбуки", "0", "30000", "HP","Lenovo", 48, 1},
-                { "Компьютерная техника", "Планшеты", "20000","25000","Apple","HP", 6, 2},
+                { "Компьютерная техника", "Планшеты", "20000","25000","Apple","HP", 5, 2},
                 });
     }
 
@@ -86,7 +86,7 @@ public class YandexTest {
     }
 
     @Test
-    public void test() throws InterruptedException {
+    public void test() {
         MainPage mainPage = new MainPage();
         MarketPage marketPage = new MarketPage();
         SecondMarketPage secondMarketPage = new SecondMarketPage();

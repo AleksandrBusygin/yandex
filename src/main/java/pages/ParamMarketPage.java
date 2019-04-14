@@ -61,9 +61,9 @@ public class ParamMarketPage extends BasePageObject {
         }
     }
 
-    public void checkCountOfProducts(int count) throws InterruptedException {
-        waitPageLoaded();
-        Assert.assertTrue("Количество элементов не равно 12", resultModels.size() == count);
+    public void checkCountOfProducts(int count){
+//        waitPageLoaded();
+        Assert.assertTrue("Количество элементов не равно ожидаемому - " + count, resultModels.size() == count);
     }
 
     public boolean productExist(String manufacturerName, String secondManufacturerName){
