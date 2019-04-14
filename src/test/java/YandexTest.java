@@ -49,12 +49,6 @@ public class YandexTest {
         Init.getDriver().close();
     }
 
-    MainPage mainPage = new MainPage();
-    MarketPage marketPage = new MarketPage();
-    SecondMarketPage secondMarketPage = new SecondMarketPage();
-    ParamMarketPage paramMarketPage = new ParamMarketPage();
-
-
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
@@ -77,7 +71,12 @@ public class YandexTest {
     public String secondManufacturer;
 
     @Test
-    public void firstTest() {
+    public void firstTest() throws InterruptedException {
+        MainPage mainPage = new MainPage();
+        MarketPage marketPage = new MarketPage();
+        SecondMarketPage secondMarketPage = new SecondMarketPage();
+        ParamMarketPage paramMarketPage = new ParamMarketPage();
+
         mainPage.chooseService();
         marketPage.chooseCategory(category);
         secondMarketPage.chooseItem(item);
