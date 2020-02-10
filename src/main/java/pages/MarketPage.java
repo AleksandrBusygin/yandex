@@ -6,10 +6,18 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class MarketPage extends BasePageObject {
-    @FindBy(xpath = "//a[@class='link n-w-tab__control b-zone b-spy-events']")
+    @FindBy(xpath = "//div[@data-zone-name='category-link']")
     List<WebElement> categories;
 
-    public void chooseCategory(String name){
-       chooseElement(categories,name);
+    @FindBy(xpath = "//div[@class='n-region-notification__header']")
+    WebElement regionHelper;
+
+    @FindBy(xpath = "//div/span[contains(@class,'n-region-notification__ok')]")
+    WebElement region;
+
+    public void chooseCategory(String name) {
+        waitFieldisDisplayed(regionHelper);
+        click(region);
+        chooseElement(categories, name);
     }
 }

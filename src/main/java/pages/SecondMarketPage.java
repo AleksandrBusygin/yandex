@@ -10,7 +10,7 @@ public class SecondMarketPage extends BasePageObject {
     @FindBy(xpath = "//a[@class='_2qvOOvezty _2x2zBaVN-3 _9qbcyI_fyS']")
     List<WebElement> items;
 
-    public void  chooseItem(String name){
+    public void chooseItem(String name){
         chooseElement(items, name);
     }
 }

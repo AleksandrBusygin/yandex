@@ -1,5 +1,6 @@
 package pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,7 +28,7 @@ public class BasePageObject {
         wait.until(ExpectedConditions.visibilityOf(find));
     }
 
-    public boolean isElementPresent(WebElement element){
+    public static boolean isElementPresent(WebElement element){
         try{
             Init.getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             return  element.isDisplayed();
@@ -43,5 +44,22 @@ public class BasePageObject {
             element.clear();
             element.sendKeys(text);
         }
+    }
+
+    public void click(WebElement element) {
+        Wait<WebDriver> wait = new WebDriverWait(Init.getDriver(), 60, 10000);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        element.click();
+    }
+
+    public static void waitFieldisDisplayed(WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(Init.getDriver(), 10);
+            wait.until((WebDriver d) -> element.isDisplayed());
+            return;
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        Assert.fail("Поле не отображено");
     }
 }

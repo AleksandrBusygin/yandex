@@ -17,7 +17,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(Parameterized.class)
-public class YandexTest {
+public class yandexTest {
 
     public static Properties properties = TestProperties.getInstance().getProperties();
     protected static String baseUrl;
@@ -53,8 +53,8 @@ public class YandexTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                { "Компьютерная техника", "Ноутбуки", "0", "30000", "HP","Lenovo", 48, 1},
-                { "Компьютерная техника", "Планшеты", "20000","25000","Apple","HP", 5, 2},
+                { "Компьютерная техника", "Ноутбуки", "0", "35000", "Apple","Xiaomi", 9, 1},
+//                { "Компьютерная техника", "Планшеты", "0","25000","Samsung","Lenovo", 18, 2},
                 });
     }
 

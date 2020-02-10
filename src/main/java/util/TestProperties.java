@@ -10,7 +10,8 @@ public class TestProperties {
 
     private TestProperties() {
         try {
-            properties.load(new FileInputStream(new File("src/main/resources/" + System.getProperty("environment") + ".properties")));
+//            properties.load(new FileInputStream(new File("src/main/resources/" + System.getProperty("environment") + ".properties")));
+            properties.load(new FileInputStream(new File("src/main/resources/application.properties")));
         } catch (IOException e) {
             e.getStackTrace();
         }
