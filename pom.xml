@@ -62,6 +62,15 @@
                 <configuration>
                     <propertiesFilePath>src/main/resources/allure.properties</propertiesFilePath>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>allure-report</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -82,5 +91,10 @@
                 <version>2.13.1</version>
                 <scope>test</scope>
             </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 </project>
